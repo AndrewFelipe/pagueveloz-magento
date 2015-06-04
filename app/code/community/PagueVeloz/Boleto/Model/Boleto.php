@@ -50,9 +50,10 @@ class PagueVeloz_Boleto_Model_Boleto extends Mage_Core_Model_Abstract
 
                     if (($_boleto->SeuNumero == $this->getSeuNumero()) && $_boleto->TemPagamento) {
                         $this->invoiceOrder($_order);
-                        $_order->setStatus($boletoMethod->getOrderStatus())
-                            ->setState($boletoMethod->getOrderStatus())
-                            ->addStatusHistoryComment("BOLETO PAGO EM: {$_boleto->DataPagamento} | R$ {$_boleto->ValorPago}")
+                        $_order->setStatus($boletoMethod->getPaidOrderStatus())
+                            ->setState($boletoMethod->getPaidOrderStatus())
+                            ->save();
+                        $_order->addStatusHistoryComment("BOLETO PAGO EM: {$_boleto->DataPagamento} | R$ {$_boleto->ValorPago}")
                             ->save();
 
                         $this->setStatus('pago')
